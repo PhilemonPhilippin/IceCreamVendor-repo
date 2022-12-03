@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) => services
         .AddTransient<IIceCreamService, IceCreamService>()
+        .AddTransient<ILogService, LogService>()
         .AddTransient<IceCreamBusiness>()
         )
     .Build();

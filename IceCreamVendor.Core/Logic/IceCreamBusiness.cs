@@ -11,13 +11,13 @@ namespace IceCreamVendor.Core.Logic;
 
 public class IceCreamBusiness
 {
-    private readonly IIceCreamService _service;
-    private readonly ILogger<IceCreamBusiness> _logger;
+    private readonly IIceCreamService _iceCreamService;
+    private readonly ILogService _logService;
     private const int _MAXCOUNT = 5;
-    public IceCreamBusiness(IIceCreamService service, ILogger<IceCreamBusiness> logger)
+    public IceCreamBusiness(IIceCreamService iceCreamService, ILogService logService)
     {
-        _service = service;
-        _logger = logger;
+        _iceCreamService = iceCreamService;
+        _logService = logService;
     }
 
     public void RunBusiness()
@@ -74,7 +74,7 @@ public class IceCreamBusiness
     public void SuggestFlavours()
     {
         Console.WriteLine("Here are the different flavours:");
-        List<string> flavours = _service.GetFlavours();
+        List<string> flavours = _iceCreamService.GetFlavours();
         foreach (string str in flavours)
         {
             Console.WriteLine(str);
@@ -87,7 +87,7 @@ public class IceCreamBusiness
     public void ServeIceCream(string choice)
     {
         Console.WriteLine($"The vendor serves a {choice} flavoured ice cream to the customer");
-        _logger.LogInformation("The vendor sells {choice} ice cream at {time}", choice, DateTime.Now);
+        _logService.LogSell(choice);
     }
     public void CountMoney()
     {
