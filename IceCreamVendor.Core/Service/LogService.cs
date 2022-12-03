@@ -26,6 +26,16 @@ public class LogService : ILogService
 
         return isWritten;
     }
+
+    public bool LogWarning(string choice)
+    {
+        CreateLogDirectory();
+        CreateLogFile("warnings");
+        bool isWritten = WriteLogs("warnings", $"Customer asked ice cream flavour : {choice} at {DateTime.Now}");
+        _logger.LogWarning("Customer asked ice cream flavour : {choice} at {time}", choice, DateTime.Now);
+
+        return isWritten;
+    }
     private void CreateLogDirectory()
     {
         _pathDirectory = Path.Combine(_baseDirectory, "Logs");

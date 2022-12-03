@@ -9,4 +9,5 @@ namespace IceCreamVendor.Core.Service;
 public interface ILogService
 {
     bool LogSell(string flavour);
+    bool LogWarning(string choice);
 }

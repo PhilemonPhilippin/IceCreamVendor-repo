@@ -34,15 +34,18 @@ public class IceCreamBusiness
     public void SellIceCream()
     {
         int count = 0;
+        GreetCustomer();
+        SuggestFlavours();
         while (count < _MAXCOUNT)
         {
-            GreetCustomer();
-            SuggestFlavours();
             string choice = AskIceCreamChoice();
             if (IsValidFlavour(choice)) 
             {
                 ServeIceCream(choice);
                 count++;
+            } else
+            {
+                _logService.LogWarning(choice);
             }
         }
     }
