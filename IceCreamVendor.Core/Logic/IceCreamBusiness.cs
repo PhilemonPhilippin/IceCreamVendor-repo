@@ -1,4 +1,5 @@
 ﻿using IceCreamVendor.Core.Service;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace IceCreamVendor.Core.Logic;
 public class IceCreamBusiness
 {
     private readonly IIceCreamService _service;
+    private readonly ILogger<IceCreamBusiness> _logger;
 
-    public IceCreamBusiness(IIceCreamService service)
+    public IceCreamBusiness(IIceCreamService service, ILogger<IceCreamBusiness> logger)
     {
         _service = service;
+        _logger = logger;
     }
 
     public void RunBusiness()
@@ -71,6 +74,7 @@ public class IceCreamBusiness
     public void ServeIceCream(string choice)
     {
         Console.WriteLine($"The vendor serves a {choice} flavoured ice cream to the customer");
+        _logger.LogInformation("The vendor sells {choice} ice cream at {time}", choice, DateTime.Now);
     }
     public void CountMoney()
     {
