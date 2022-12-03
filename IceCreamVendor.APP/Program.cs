@@ -20,5 +20,5 @@ static void RunBusiness(IServiceProvider services)
     IServiceProvider provider = serviceScope.ServiceProvider;
 
     IceCreamBusiness business = provider.GetService<IceCreamBusiness>();
-    business.OpenBusiness();
+    business?.RunBusiness();
 }

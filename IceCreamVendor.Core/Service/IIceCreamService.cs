@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IceCreamVendor.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,5 @@ namespace IceCreamVendor.Core.Service;
 
 public interface IIceCreamService
 {
-    void OpenShutters();
-    void CleanWorkspace();
-    void GreetCustomer();
+    List<string> GetFlavours();
 }

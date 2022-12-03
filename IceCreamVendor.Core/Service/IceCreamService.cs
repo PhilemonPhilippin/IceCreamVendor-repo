@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IceCreamVendor.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +9,9 @@ namespace IceCreamVendor.Core.Service;
 
 public class IceCreamService : IIceCreamService
 {
-    public void CleanWorkspace()
+    public List<string> GetFlavours()
     {
-        Console.WriteLine("*The vendor cleans the workspace.*");
+        return Enum.GetNames(typeof(Flavour)).ToList();
     }
-    public void OpenShutters()
-    {
-        Console.WriteLine("*The vendor take his key and opens the shutters*");
-    }
-    public void GreetCustomer()
-    {
-        Console.WriteLine($"Hello and welcome, would you like a delicious ice cream?");
-    }
+
 }
