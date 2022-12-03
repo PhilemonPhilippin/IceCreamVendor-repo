@@ -1,4 +1,5 @@
 ﻿using IceCreamVendor.Core.Service;
+using IceCreamVendor.Entities.Entities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ public class IceCreamBusiness
 {
     private readonly IIceCreamService _service;
     private readonly ILogger<IceCreamBusiness> _logger;
-
+    private const int _MAXCOUNT = 5;
     public IceCreamBusiness(IIceCreamService service, ILogger<IceCreamBusiness> logger)
     {
         _service = service;
@@ -32,10 +33,18 @@ public class IceCreamBusiness
     }
     public void SellIceCream()
     {
-        GreetCustomer();
-        SuggestFlavours();
-        string choice = AskIceCreamChoice();
-        ServeIceCream(choice);
+        int count = 0;
+        while (count < _MAXCOUNT)
+        {
+            GreetCustomer();
+            SuggestFlavours();
+            string choice = AskIceCreamChoice();
+            if (IsValidFlavour(choice)) 
+            {
+                ServeIceCream(choice);
+                count++;
+            }
+        }
     }
     public void CloseBusiness()
     {
@@ -70,6 +79,10 @@ public class IceCreamBusiness
         {
             Console.WriteLine(str);
         }
+    }
+    private bool IsValidFlavour(string choice)
+    {
+        return Enum.IsDefined(typeof(Flavour), choice);
     }
     public void ServeIceCream(string choice)
     {

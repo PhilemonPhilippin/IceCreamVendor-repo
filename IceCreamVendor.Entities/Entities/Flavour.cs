@@ -8,13 +8,13 @@ namespace IceCreamVendor.Entities.Entities;
 
 public enum Flavour
 {
-    Vanilla,
-    Chocolate,
-    Stracciatella,
-    Coffee,
-    Pistachio,
-    Banana,
-    Lemon,
-    Coconut,
-    Strawberry
+    vanilla,
+    chocolate,
+    stracciatella,
+    coffee,
+    pistachio,
+    banana,
+    lemon,
+    coconut,
+    strawberry
 }
