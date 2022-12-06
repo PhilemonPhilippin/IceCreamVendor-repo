@@ -88,7 +88,7 @@ public class IceCreamBusiness
     }
     private string AskIceCreamChoice()
     {
-        Console.WriteLine("- Which ice cream flavour do you want?");
+        Console.WriteLine("- Which ice cream flavour do you want now?");
         string customerChoice = Console.ReadLine()?.Trim().ToLower();
         return customerChoice.Length > 15 ? customerChoice.Substring(0, 15) : customerChoice;
     }
