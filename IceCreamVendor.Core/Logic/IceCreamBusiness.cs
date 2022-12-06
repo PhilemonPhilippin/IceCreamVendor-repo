@@ -1,4 +1,5 @@
-﻿using IceCreamVendor.Core.Service;
+﻿using IceCreamVendor.Core.Data;
+using IceCreamVendor.Core.Service;
 using IceCreamVendor.Entities.Entities;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,11 +14,13 @@ public class IceCreamBusiness
 {
     private readonly IIceCreamService _iceCreamService;
     private readonly ILogService _logService;
+    private readonly ISellService _sellService;
     private const int _MAXCOUNT = 5;
-    public IceCreamBusiness(IIceCreamService iceCreamService, ILogService logService)
+    public IceCreamBusiness(IIceCreamService iceCreamService, ILogService logService, ISellService sellService)
     {
         _iceCreamService = iceCreamService;
         _logService = logService;
+        _sellService = sellService;
     }
 
     public void RunBusiness()

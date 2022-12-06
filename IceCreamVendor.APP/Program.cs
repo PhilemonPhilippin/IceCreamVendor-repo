@@ -16,6 +16,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) => services
         .AddTransient<IIceCreamService, IceCreamService>()
         .AddTransient<ILogService, LogService>()
+        .AddTransient<ISellService, SellService>()
         .AddDbContext<IceCreamContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")))
         .AddTransient<IceCreamBusiness>()
         )
