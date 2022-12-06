@@ -29,15 +29,15 @@ public class IceCreamBusiness
         SellIceCream();
         CloseBusiness();
     }
-    public void OpenBusiness()
+    private void OpenBusiness()
     {
         CleanWorkspace();
         OpenShutters();
     }
-    public void SellIceCream()
+    private void SellIceCream()
     {
         int count = 0;
-        GreetCustomer();
+        string clientName = GreetCustomer();
         SuggestFlavours();
         while (count < _MAXCOUNT)
         {
@@ -45,6 +45,8 @@ public class IceCreamBusiness
             if (IsValidFlavour(choice)) 
             {
                 ServeIceCream(choice);
+                decimal price = 2.5m;
+                CreateSellRecord(choice, clientName, price);
                 count++;
             } else
             {
@@ -52,32 +54,35 @@ public class IceCreamBusiness
             }
         }
     }
-    public void CloseBusiness()
+    private void CloseBusiness()
     {
         CleanWorkspace();
         CountMoney();
         CloseShutters();
     }
 
-    public void CleanWorkspace()
+    private void CleanWorkspace()
     {
         Console.WriteLine("*The vendor cleans the workspace.*");
     }
-    public void OpenShutters()
+    private void OpenShutters()
     {
         Console.WriteLine("*The vendor take his key and opens the shutters*");
     }
-    public void GreetCustomer()
+    private string GreetCustomer()
     {
-        Console.WriteLine($"Hello and welcome, would you like a delicious ice cream?");
+        Console.WriteLine($"Hello and welcome, what is your name?");
+        string clientName = Console.ReadLine()?.Trim();
+        Console.WriteLine($"Hello {clientName}, would you like a delicious icecream ?");
+        return clientName.Length > 50 ? clientName.Substring(50) : clientName;
     }
-    public string AskIceCreamChoice()
+    private string AskIceCreamChoice()
     {
         Console.WriteLine("Which ice cream flavour do you want?");
-        string customerChoice = Console.ReadLine().Trim().ToLower();
+        string customerChoice = Console.ReadLine()?.Trim().ToLower();
         return customerChoice.Length > 15 ? customerChoice.Substring(0, 15) : customerChoice;
     }
-    public void SuggestFlavours()
+    private void SuggestFlavours()
     {
         Console.WriteLine("Here are the different flavours:");
         List<string> flavours = _iceCreamService.GetFlavours();
@@ -90,17 +95,29 @@ public class IceCreamBusiness
     {
         return Enum.IsDefined(typeof(Flavour), choice);
     }
-    public void ServeIceCream(string choice)
+    private void ServeIceCream(string choice)
     {
         Console.WriteLine($"The vendor serves a {choice} flavoured ice cream to the customer");
         _logService.LogSell(choice);
     }
-    public void CountMoney()
+    private void CountMoney()
     {
         Console.WriteLine("*The vendor counts the money he made today*");
     }
-    public void CloseShutters()
+    private void CloseShutters()
     {
         Console.WriteLine("*The vendor take his key and closes the shutters*");
+    }
+
+    private bool CreateSellRecord(string choice, string clientName, decimal price)
+    {
+        Sell sell = new Sell()
+        {
+            IceCream = choice,
+            ClientName = clientName,
+            Price = price
+        };
+        bool isAdded =_sellService.CreateSell(sell);
+        return isAdded;
     }
 }

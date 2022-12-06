@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IceCreamVendor.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,4 +10,5 @@ namespace IceCreamVendor.Core.Data;
 public interface ISellService
 {
     int GetLastId();
+    bool CreateSell(Sell sell);
 }

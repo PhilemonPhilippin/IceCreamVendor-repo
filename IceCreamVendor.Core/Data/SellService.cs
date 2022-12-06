@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IceCreamVendor.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,20 @@ public class SellService : ISellService
     {
         int lastId = _context.Sells.Select(s => s.Id).OrderByDescending(id => id).FirstOrDefault();
         return lastId;
+    }
+    public bool CreateSell(Sell sell)
+    {
+        try
+        {
+            _context.Sells.Add(sell);
+            _context.SaveChanges();
+            return true;
+        } 
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error while creating new sell : ");
+            return false;
+        }
+
     }
 }
