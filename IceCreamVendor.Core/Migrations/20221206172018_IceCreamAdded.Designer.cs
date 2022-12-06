@@ -3,6 +3,7 @@ using IceCreamVendor.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IceCreamVendor.Core.Migrations
 {
     [DbContext(typeof(IceCreamContext))]
-    partial class IceCreamContextModelSnapshot : ModelSnapshot
+    [Migration("20221206172018_IceCreamAdded")]
+    partial class IceCreamAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

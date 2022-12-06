@@ -38,16 +38,25 @@ public class IceCreamBusiness
     {
         int count = 0;
         string clientName = GreetCustomer();
-        SuggestFlavours();
+        List<string> flavours = _iceCreamService.GetIceCreams().Select(ic => ic.Flavour).ToList();
         while (count < _MAXCOUNT)
         {
+            if (count % 2 == 0)
+            {
+                SuggestFlavours(flavours);
+            }
+
             string choice = AskIceCreamChoice();
-            if (IsValidFlavour(choice)) 
+            if (IsValidFlavour(choice, flavours)) 
             {
                 ServeIceCream(choice);
-                decimal price = 2.5m;
-                CreateSellRecord(choice, clientName, price);
-                count++;
+                decimal price = _iceCreamService.GetIceCreamWithFlavour(choice)?.Price ?? -1;
+                if (price > 0)
+                {
+                    CreateSellRecord(choice, clientName, price);
+                    count++;
+                    Thread.Sleep(2000);
+                }
             } else
             {
                 _logService.LogWarning(choice);
@@ -56,6 +65,7 @@ public class IceCreamBusiness
     }
     private void CloseBusiness()
     {
+        OutOfIceCreams();
         CleanWorkspace();
         CountMoney();
         CloseShutters();
@@ -63,50 +73,53 @@ public class IceCreamBusiness
 
     private void CleanWorkspace()
     {
-        Console.WriteLine("*The vendor cleans the workspace.*");
+        Console.WriteLine("***The vendor cleans the workspace.***");
     }
     private void OpenShutters()
     {
-        Console.WriteLine("*The vendor take his key and opens the shutters*");
+        Console.WriteLine("***The vendor take his key and opens the shutters***");
     }
     private string GreetCustomer()
     {
-        Console.WriteLine($"Hello and welcome, what is your name?");
+        Console.WriteLine($"- Hello and welcome, what is your name?");
         string clientName = Console.ReadLine()?.Trim();
-        Console.WriteLine($"Hello {clientName}, would you like a delicious icecream ?");
+        Console.WriteLine($"- Hello {clientName}, would you like a delicious icecream ?");
         return clientName.Length > 50 ? clientName.Substring(50) : clientName;
     }
     private string AskIceCreamChoice()
     {
-        Console.WriteLine("Which ice cream flavour do you want?");
+        Console.WriteLine("- Which ice cream flavour do you want?");
         string customerChoice = Console.ReadLine()?.Trim().ToLower();
         return customerChoice.Length > 15 ? customerChoice.Substring(0, 15) : customerChoice;
     }
-    private void SuggestFlavours()
+    private void SuggestFlavours(List<string> flavours)
     {
-        Console.WriteLine("Here are the different flavours:");
-        List<string> flavours = _iceCreamService.GetFlavours();
+        Console.WriteLine("- Here are the different flavours:");
         foreach (string str in flavours)
         {
             Console.WriteLine(str);
         }
     }
-    private bool IsValidFlavour(string choice)
+    private bool IsValidFlavour(string choice, List<string> flavours)
     {
-        return Enum.IsDefined(typeof(Flavour), choice);
+        return flavours.Contains(choice);
     }
     private void ServeIceCream(string choice)
     {
-        Console.WriteLine($"The vendor serves a {choice} flavoured ice cream to the customer");
+        Console.WriteLine($"***The vendor serves a {choice} flavoured ice cream to the customer***");
         _logService.LogSell(choice);
+    }
+    private void OutOfIceCreams()
+    {
+        Console.WriteLine($"***The vendor is out of ice creams. He sold all of them ({_MAXCOUNT})");
     }
     private void CountMoney()
     {
-        Console.WriteLine("*The vendor counts the money he made today*");
+        Console.WriteLine("***The vendor counts the money he made today***");
     }
     private void CloseShutters()
     {
-        Console.WriteLine("*The vendor take his key and closes the shutters*");
+        Console.WriteLine("***The vendor take his key and closes the shutters***");
     }
 
     private bool CreateSellRecord(string choice, string clientName, decimal price)

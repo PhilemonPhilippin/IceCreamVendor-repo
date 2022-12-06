@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace IceCreamVendor.Entities.Entities;
 
-public enum Flavour
+public class IceCream
 {
-    vanilla,
-    chocolate,
-    stracciatella,
-    coffee,
-    pistachio,
-    banana,
-    lemon,
-    coconut,
-    strawberry
+    public int Id { get; set; }
+    public string Flavour { get; set; } = string.Empty;
+    public decimal Price { get; set; }
 }

@@ -9,6 +9,5 @@ namespace IceCreamVendor.Core.Data;
 
 public interface ISellService
 {
-    int GetLastId();
     bool CreateSell(Sell sell);
 }

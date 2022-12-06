@@ -15,11 +15,6 @@ public class SellService : ISellService
     {
         _context = context;
     }
-    public int GetLastId()
-    {
-        int lastId = _context.Sells.Select(s => s.Id).OrderByDescending(id => id).FirstOrDefault();
-        return lastId;
-    }
     public bool CreateSell(Sell sell)
     {
         try
